@@ -1,4 +1,4 @@
-import { UserRole } from 'src/common';
+import { StaffRole, UserRole } from 'src/common';
 import {
   Injectable,
   CanActivate,
@@ -8,7 +8,6 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from 'src/common';
-import { match } from 'assert';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -24,6 +23,10 @@ export class RolesGuard implements CanActivate {
       return true;
     }
     const { user } = context.switchToHttp().getRequest();
+
+    if (user.role === StaffRole.SuperAdmin) {
+      return true;
+    }
 
     if (!user || !user.role) {
       throw new UnauthorizedException('User has no role assigned.');

@@ -1,6 +1,17 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Post } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { Roles, StaffRole } from 'src/common';
+import { AppointmentsService } from './appointments.service';
+import { CreateAptDto } from './dtos/create-apt.dto';
 
 @ApiBearerAuth('access-token')
 @Controller('appointments')
-export class AppointmentsController {}
+@Roles(StaffRole.Admin, StaffRole.SuperAdmin)
+export class AppointmentsController {
+  constructor(private readonly appointmentsService: AppointmentsService) {}
+
+  @Post()
+  async create(createAptDto: CreateAptDto) {
+    await this.appointmentsService.create(createAptDto);
+  }
+}

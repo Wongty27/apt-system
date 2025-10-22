@@ -1,5 +1,4 @@
 import {
-  IsArray,
   IsEmail,
   IsEnum,
   IsNotEmpty,
@@ -7,7 +6,7 @@ import {
   Max,
   Min,
 } from 'class-validator';
-import { UserRole } from 'src/common';
+import { StaffRole } from 'src/common';
 
 export class CreateStaffDto {
   @IsEmail()
@@ -26,8 +25,7 @@ export class CreateStaffDto {
   @Max(15)
   username: string;
 
-  @IsEnum(UserRole)
-  @IsArray()
+  @IsEnum(StaffRole)
   @IsNotEmpty()
-  role: UserRole[];
+  role: StaffRole;
 }

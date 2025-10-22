@@ -18,20 +18,122 @@ export type Generated<T> =
     ? ColumnType<S, I | undefined, U>
     : ColumnType<T, T | undefined, T>;
 
+export type Int8 = ColumnType<
+  string,
+  bigint | number | string,
+  bigint | number | string
+>;
+
+export type PatientStatus = 'active' | 'discharged';
+
+export type StaffRole = 'admin' | 'doctor' | 'nurse' | 'super_admin';
+
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
-export type UserRole = 'admin' | 'doctor' | 'patient' | 'super_admin';
-
-export interface Users {
+export interface AuthSuperAdmins {
   created_at: Generated<Timestamp>;
   email: string;
   id: Generated<number>;
+  is_active: Generated<boolean | null>;
   password: string;
-  role: ArrayType<UserRole>;
+  role: Generated<StaffRole | null>;
+}
+
+export interface KpjAppointments {
+  apmt_time: Timestamp;
+  created_at: Generated<Timestamp>;
+  doctor_id: number | null;
+  hospital_id: number | null;
+  id: Generated<number>;
+  message: string | null;
+  patient_id: number | null;
   updated_at: Generated<Timestamp>;
-  username: string;
+}
+
+export interface KpjHospitals {
+  address: string | null;
+  created_at: Generated<Timestamp>;
+  email: string | null;
+  id: Generated<number>;
+  name: string;
+  updated_at: Generated<Timestamp>;
+}
+
+export interface KpjPatients {
+  created_at: Generated<Timestamp>;
+  hospital_id: number | null;
+  patient_id: Generated<number>;
+  patient_status: PatientStatus | null;
+  updated_at: Generated<Timestamp>;
+}
+
+export interface KpjStaffs {
+  created_at: Generated<Timestamp>;
+  first_name: string;
+  hospital_id: number;
+  last_name: string;
+  role: Generated<ArrayType<StaffRole> | null>;
+  specialty: string | null;
+  staff_id: Generated<number>;
+}
+
+export interface RefreshTokens {
+  created_at: Generated<Timestamp>;
+  expires_at: Timestamp;
+  hospital: string;
+  id: Generated<Int8>;
+  is_revoked: Generated<boolean>;
+  token_hash: string;
+  user_id: number;
+}
+
+export interface SmcAppointments {
+  apmt_time: Timestamp;
+  created_at: Generated<Timestamp>;
+  doctor_id: number | null;
+  hospital_id: number | null;
+  id: Generated<number>;
+  message: string | null;
+  patient_id: number | null;
+  updated_at: Generated<Timestamp>;
+}
+
+export interface SmcHospitals {
+  address: string | null;
+  created_at: Generated<Timestamp>;
+  email: string | null;
+  id: Generated<number>;
+  name: string;
+  updated_at: Generated<Timestamp>;
+}
+
+export interface SmcPatients {
+  created_at: Generated<Timestamp>;
+  hospital_id: number | null;
+  patient_id: Generated<number>;
+  patient_status: PatientStatus | null;
+  updated_at: Generated<Timestamp>;
+}
+
+export interface SmcStaffs {
+  created_at: Generated<Timestamp>;
+  first_name: string;
+  hospital_id: number;
+  last_name: string;
+  role: Generated<ArrayType<StaffRole> | null>;
+  specialty: string | null;
+  staff_id: Generated<number>;
 }
 
 export interface DB {
-  users: Users;
+  'auth.super_admins': AuthSuperAdmins;
+  'kpj.appointments': KpjAppointments;
+  'kpj.hospitals': KpjHospitals;
+  'kpj.patients': KpjPatients;
+  'kpj.staffs': KpjStaffs;
+  refresh_tokens: RefreshTokens;
+  'smc.appointments': SmcAppointments;
+  'smc.hospitals': SmcHospitals;
+  'smc.patients': SmcPatients;
+  'smc.staffs': SmcStaffs;
 }

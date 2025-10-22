@@ -1,2 +1,2 @@
-export * from '../interfaces/jwt-payload';
+export * from '../../../common/dtos/jwt-payload';
 export * from './login-dto';

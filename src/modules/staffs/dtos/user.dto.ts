@@ -1,9 +1,8 @@
-import { UserRole } from 'src/database/database';
+import { StaffRole } from 'src/database/database';
 
 export class UserDto {
   id: number;
   email: string;
   password: string;
-  username: string;
-  role: UserRole[];
+  role: StaffRole | null;
 }

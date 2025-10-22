@@ -1,37 +1,40 @@
-import { Controller, Delete, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { StaffsService } from './staffs.service';
-import { PaginatedDto, Roles, UserRole } from 'src/common';
+import { PaginatedDto, RequestWithUser, Roles, UserRole } from 'src/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { CreateStaffDto } from './dtos';
 
 @Controller('staffs')
-// @ApiBearerAuth()
-// @Roles(UserRole.SuperAdmin, UserRole.Admin)
+@ApiBearerAuth()
+@Roles(UserRole.Staff)
 export class StaffsController {
   constructor(private staffsService: StaffsService) {}
 
   @Post()
-  async createStaff(createStaffDto: CreateStaffDto): Promise<any> {
-    return await this.staffsService.createStaff(createStaffDto);
+  async createStaff(
+    @Req() req: RequestWithUser,
+    @Body() createStaffDto: CreateStaffDto,
+  ): Promise<any> {
+    return await this.staffsService.createStaff(req, createStaffDto);
   }
 
-  @Get()
-  async getStaffList(): Promise<PaginatedDto<any>> {
-    return await this.staffsService.getStaffList();
-  }
+  // @Get()
+  // async getStaffList(): Promise<PaginatedDto<any>> {
+  //   return await this.staffsService.getStaffList();
+  // }
 
-  @Get(':id')
-  async getStaffById(id: number): Promise<any> {
-    return await this.staffsService.getStaffById(id);
-  }
+  // @Get(':id')
+  // async getStaffById(id: number): Promise<any> {
+  //   return await this.staffsService.getStaffById(id);
+  // }
 
-  @Post(':id')
-  async updateStaff(id: number): Promise<any> {
-    return await this.staffsService.updateStaff(id);
-  }
+  // @Post(':id')
+  // async updateStaff(id: number): Promise<any> {
+  //   return await this.staffsService.updateStaff(id);
+  // }
 
-  @Delete(':id')
-  async deleteStaff(id: number): Promise<any> {
-    return await this.staffsService.deleteStaff(id);
-  }
+  // @Delete(':id')
+  // async deleteStaff(id: number): Promise<any> {
+  //   return await this.staffsService.deleteStaff(id);
+  // }
 }
