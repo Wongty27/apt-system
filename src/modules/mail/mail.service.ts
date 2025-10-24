@@ -27,7 +27,7 @@ export class MailService {
     }
   }
 
-  @Cron(CronExpression.EVERY_DAY_AT_8AM)
+  // @Cron(CronExpression.EVERY_DAY_AT_8AM)
   async sendAppointmentReminder(hospitalName: string) {
     try {
       const query = sql<string>`
